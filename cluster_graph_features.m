@@ -53,12 +53,13 @@ else
     sym_edges = sparse(edges | edges'); % full symmetric matrix
     weighted = sym_edges .* D;
     
-    
+    % Create a graph object 
+    G = graph(weighted);
     
     % pre-calculate shortest paths (8/24/2013)
     pathlengths = cell(1,N);
     for i = 1:N
-        distance = graphshortestpath(weighted,i);
+        distance = distances(G,i);
         pathlengths{i} = nonzeros(distance(isfinite(distance))).';
     end
     pathlengths_nonempty = pathlengths;
